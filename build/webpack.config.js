@@ -1,8 +1,8 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
+const projectConfig = require("./project.setting");
 
-const PAGE_TITLE = "React Planner";
 const VENDORS_LIBRARIES = [
     "immutable",
     "react",
@@ -13,22 +13,18 @@ const VENDORS_LIBRARIES = [
 ];
 
 module.exports = (env, self) => {
-    let isProduction = self.hasOwnProperty("mode")
+    const isProduction = self.hasOwnProperty("mode")
         ? self.mode === "production"
         : true;
-    let port = self.hasOwnProperty("port") ? self.port : 8080;
-
-    if (isProduction) console.info("Webpack: Production mode");
-    else console.info("Webpack: Development mode");
 
     let config = {
-        context: path.resolve(__dirname),
+        context: path.resolve(__dirname, "../src"),
         entry: {
             app: "../src/renderer.jsx",
             vendor: VENDORS_LIBRARIES,
         },
         output: {
-            path: path.join(__dirname, "dist"),
+            path: path.join(__dirname, "../dist"),
             filename: "[chunkhash].[name].js",
         },
         performance: {
@@ -37,8 +33,8 @@ module.exports = (env, self) => {
         devtool: isProduction ? "source-map" : "eval",
         devServer: {
             open: true,
-            port: port,
-            host: "0.0.0.0",
+            port: projectConfig.port,
+            host: projectConfig.host,
             contentBase: path.join(__dirname, "./dist"),
         },
         resolve: {
@@ -88,7 +84,7 @@ module.exports = (env, self) => {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                title: PAGE_TITLE,
+                title: projectConfig.title,
                 template: "../public/index.html.ejs",
                 filename: "index.html",
                 inject: "body",
