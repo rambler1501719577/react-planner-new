@@ -1,0 +1,8 @@
+1. 处理模型静态资源文件
+bin, textures, gltf, obj等通过copy-webpack-plugin导入指定路径下, 如src/catalog/items/desk/textures中的全部文件拷贝
+到dist/catalog/items/desk/textures中, 并且不对文件内容做处理
+
+2. svg文件处理
+如catalog/items/desk/planner-react.jsx自动导入当前文件夹下的preview.svg作为render2D函数的内容, 考虑写一个解析器, 解析svg节点
+将传入的宽高和样式导入
+
