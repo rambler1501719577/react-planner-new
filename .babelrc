@@ -1,14 +1,27 @@
 {
-  "plugins": [
-    "transform-object-rest-spread",
-    "import-glob"
-  ],
-  "env": {
-    "commonjs": {
-      "presets": ["env", "react"]
-    },
-    "es": {
-      "presets": [["env", { "modules": false }], "react"]
+    "plugins": [
+        // 支持es6新特性, 支持对象扩展和解耦运算等特性
+        "transform-object-rest-spread",
+        // 支持import通配符写法, 如import "aa/**/a.jsx"
+        "import-glob"
+    ],
+    "env": {
+        "commonjs": {
+            "presets": [
+                "env",
+                "react"
+            ]
+        },
+        "es": {
+            "presets": [
+                [
+                    "env",
+                    {
+                        "modules": false
+                    }
+                ],
+                "react"
+            ]
+        }
     }
-  }
 }
