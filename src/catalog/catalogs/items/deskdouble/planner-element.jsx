@@ -13,247 +13,255 @@ const objectMaxLOD = makeObjectMaxLOD();
 const objectMinLOD = makeObjectMinLOD();
 
 function makeObjectMaxLOD() {
-  let deskdouble = new Three.Mesh();
+    let deskdouble = new Three.Mesh();
 
-  let newDepth = 0.5;
-  let newWidth = 0.9;
-  let newHeight = 1;
-  let radius = 0.03;
+    let newDepth = 0.5;
+    let newWidth = 0.9;
+    let newHeight = 1;
+    let radius = 0.03;
 
-  let geometry = new Three.BoxGeometry(
-    newWidth + newWidth / 6,
-    newHeight / 20,
-    newDepth + newDepth / 4
-  );
+    let geometry = new Three.BoxGeometry(
+        newWidth + newWidth / 6,
+        newHeight / 20,
+        newDepth + newDepth / 4
+    );
 
-  let boxMaterials = [brown, brown, green, brown, brown, brown];
+    let boxMaterials = [brown, brown, green, brown, brown, brown];
 
-  let plane = new Three.Mesh(geometry, boxMaterials);
-  plane.position.y = newHeight;
-  deskdouble.add(plane);
+    let plane = new Three.Mesh(geometry, boxMaterials);
+    plane.position.y = newHeight;
+    deskdouble.add(plane);
 
-  let geometry_legs = new Three.CylinderGeometry(
-    radius,
-    radius,
-    newHeight,
-    32,
-    32
-  );
+    let geometry_legs = new Three.CylinderGeometry(
+        radius,
+        radius,
+        newHeight,
+        32,
+        32
+    );
 
-  let geometry2 = new Three.BoxGeometry(newWidth, newHeight / 20, newDepth);
-  let plane2 = new Three.Mesh(geometry2, brown);
-  plane2.position.y = newHeight / 2 + newHeight / 4;
-  deskdouble.add(plane2);
+    let geometry2 = new Three.BoxGeometry(newWidth, newHeight / 20, newDepth);
+    let plane2 = new Three.Mesh(geometry2, brown);
+    plane2.position.y = newHeight / 2 + newHeight / 4;
+    deskdouble.add(plane2);
 
-  let geometry3 = new Three.BoxGeometry(
-    newWidth,
-    newHeight / 10,
-    newDepth / 20
-  );
-  let plane3 = new Three.Mesh(geometry3, brown);
-  plane3.position.y = newHeight / 2 + newHeight / 4 + newHeight / 16;
-  plane3.position.z = newDepth / 3 + newDepth / 5;
-  deskdouble.add(plane3);
+    let geometry3 = new Three.BoxGeometry(
+        newWidth,
+        newHeight / 10,
+        newDepth / 20
+    );
+    let plane3 = new Three.Mesh(geometry3, brown);
+    plane3.position.y = newHeight / 2 + newHeight / 4 + newHeight / 16;
+    plane3.position.z = newDepth / 3 + newDepth / 5;
+    deskdouble.add(plane3);
 
-  let leg1 = new Three.Mesh(geometry_legs, grey);
-  leg1.position.x = newWidth / 2;
-  leg1.position.z = newDepth / 2;
-  leg1.position.y = newHeight / 2;
-  deskdouble.add(leg1);
+    let leg1 = new Three.Mesh(geometry_legs, grey);
+    leg1.position.x = newWidth / 2;
+    leg1.position.z = newDepth / 2;
+    leg1.position.y = newHeight / 2;
+    deskdouble.add(leg1);
 
-  let leg2 = new Three.Mesh(geometry_legs, grey);
-  leg2.position.x = newWidth / 2;
-  leg2.position.z = -newDepth / 2;
-  leg2.position.y = newHeight / 2;
-  deskdouble.add(leg2);
+    let leg2 = new Three.Mesh(geometry_legs, grey);
+    leg2.position.x = newWidth / 2;
+    leg2.position.z = -newDepth / 2;
+    leg2.position.y = newHeight / 2;
+    deskdouble.add(leg2);
 
-  let leg3 = new Three.Mesh(geometry_legs, grey);
-  leg3.position.x = -newWidth / 2;
-  leg3.position.z = newDepth / 2;
-  leg3.position.y = newHeight / 2;
-  deskdouble.add(leg3);
+    let leg3 = new Three.Mesh(geometry_legs, grey);
+    leg3.position.x = -newWidth / 2;
+    leg3.position.z = newDepth / 2;
+    leg3.position.y = newHeight / 2;
+    deskdouble.add(leg3);
 
-  let leg4 = new Three.Mesh(geometry_legs, grey);
-  leg4.position.x = -newWidth / 2;
-  leg4.position.z = -newDepth / 2;
-  leg4.position.y = newHeight / 2;
-  deskdouble.add(leg4);
+    let leg4 = new Three.Mesh(geometry_legs, grey);
+    leg4.position.x = -newWidth / 2;
+    leg4.position.z = -newDepth / 2;
+    leg4.position.y = newHeight / 2;
+    deskdouble.add(leg4);
 
-  return deskdouble;
+    return deskdouble;
 }
 
 function makeObjectMinLOD() {
-  let deskdouble = new Three.Mesh();
+    let deskdouble = new Three.Mesh();
 
-  let newDepth = 0.5;
-  let newWidth = 0.9;
-  let newHeight = 1;
-  let radius = 0.03;
+    let newDepth = 0.5;
+    let newWidth = 0.9;
+    let newHeight = 1;
+    let radius = 0.03;
 
-  let geometry = new Three.BoxGeometry(
-    newWidth + newWidth / 6,
-    newHeight / 20,
-    newDepth + newDepth / 4
-  );
+    let geometry = new Three.BoxGeometry(
+        newWidth + newWidth / 6,
+        newHeight / 20,
+        newDepth + newDepth / 4
+    );
 
-  let boxMaterials = [brown, brown, green, brown, brown, brown];
+    let boxMaterials = [brown, brown, green, brown, brown, brown];
 
-  let plane = new Three.Mesh(geometry, boxMaterials);
-  plane.position.y = newHeight;
-  deskdouble.add(plane);
+    let plane = new Three.Mesh(geometry, boxMaterials);
+    plane.position.y = newHeight;
+    deskdouble.add(plane);
 
-  let geometry_legs = new Three.CylinderGeometry(
-    radius,
-    radius,
-    newHeight,
-    8,
-    8
-  );
+    let geometry_legs = new Three.CylinderGeometry(
+        radius,
+        radius,
+        newHeight,
+        8,
+        8
+    );
 
-  let geometry2 = new Three.BoxGeometry(newWidth, newHeight / 20, newDepth);
-  let plane2 = new Three.Mesh(geometry2, brown);
-  plane2.position.y = newHeight / 2 + newHeight / 4;
-  deskdouble.add(plane2);
+    let geometry2 = new Three.BoxGeometry(newWidth, newHeight / 20, newDepth);
+    let plane2 = new Three.Mesh(geometry2, brown);
+    plane2.position.y = newHeight / 2 + newHeight / 4;
+    deskdouble.add(plane2);
 
-  let geometry3 = new Three.BoxGeometry(
-    newWidth,
-    newHeight / 10,
-    newDepth / 20
-  );
-  let plane3 = new Three.Mesh(geometry3, brown);
-  plane3.position.y = newHeight / 2 + newHeight / 4 + newHeight / 16;
-  plane3.position.z = newDepth / 3 + newDepth / 5;
-  deskdouble.add(plane3);
+    let geometry3 = new Three.BoxGeometry(
+        newWidth,
+        newHeight / 10,
+        newDepth / 20
+    );
+    let plane3 = new Three.Mesh(geometry3, brown);
+    plane3.position.y = newHeight / 2 + newHeight / 4 + newHeight / 16;
+    plane3.position.z = newDepth / 3 + newDepth / 5;
+    deskdouble.add(plane3);
 
-  let leg1 = new Three.Mesh(geometry_legs, grey);
-  leg1.position.x = newWidth / 2;
-  leg1.position.z = newDepth / 2;
-  leg1.position.y = newHeight / 2;
-  deskdouble.add(leg1);
+    let leg1 = new Three.Mesh(geometry_legs, grey);
+    leg1.position.x = newWidth / 2;
+    leg1.position.z = newDepth / 2;
+    leg1.position.y = newHeight / 2;
+    deskdouble.add(leg1);
 
-  let leg2 = new Three.Mesh(geometry_legs, grey);
-  leg2.position.x = newWidth / 2;
-  leg2.position.z = -newDepth / 2;
-  leg2.position.y = newHeight / 2;
-  deskdouble.add(leg2);
+    let leg2 = new Three.Mesh(geometry_legs, grey);
+    leg2.position.x = newWidth / 2;
+    leg2.position.z = -newDepth / 2;
+    leg2.position.y = newHeight / 2;
+    deskdouble.add(leg2);
 
-  let leg3 = new Three.Mesh(geometry_legs, grey);
-  leg3.position.x = -newWidth / 2;
-  leg3.position.z = newDepth / 2;
-  leg3.position.y = newHeight / 2;
-  deskdouble.add(leg3);
+    let leg3 = new Three.Mesh(geometry_legs, grey);
+    leg3.position.x = -newWidth / 2;
+    leg3.position.z = newDepth / 2;
+    leg3.position.y = newHeight / 2;
+    deskdouble.add(leg3);
 
-  let leg4 = new Three.Mesh(geometry_legs, grey);
-  leg4.position.x = -newWidth / 2;
-  leg4.position.z = -newDepth / 2;
-  leg4.position.y = newHeight / 2;
-  deskdouble.add(leg4);
+    let leg4 = new Three.Mesh(geometry_legs, grey);
+    leg4.position.x = -newWidth / 2;
+    leg4.position.z = -newDepth / 2;
+    leg4.position.y = newHeight / 2;
+    deskdouble.add(leg4);
 
-  return deskdouble;
+    return deskdouble;
 }
 
 export default {
-  name: "double school desk",
-  prototype: "items",
+    name: "double school desk",
+    prototype: "items",
 
-  info: {
-    tag: ["furnishings", "wood"],
-    title: "double school desk",
-    description: "double school desk",
-    image: require("./deskdouble.png"),
-  },
-
-  properties: {
-    altitude: {
-      label: "altitude",
-      type: "length-measure",
-      defaultValue: {
-        length: 0,
-        unit: "cm",
-      },
+    info: {
+        tag: ["furnishings", "wood"],
+        title: "double school desk",
+        description: "double school desk",
+        image: require("./deskdouble.png"),
     },
-  },
 
-  render2D: function (element, layer, scene) {
-    let angle = element.rotation + 90;
+    properties: {
+        altitude: {
+            label: "altitude",
+            type: "length-measure",
+            defaultValue: {
+                length: 0,
+                unit: "cm",
+            },
+        },
+    },
 
-    let textRotation = 0;
-    if (Math.sin((angle * Math.PI) / 180) < 0) {
-      textRotation = 180;
-    }
+    render2D: function (element, layer, scene) {
+        let angle = element.rotation + 90;
 
-    return (
-      <g transform={`translate(${-WIDTH / 2},${-DEPTH / 2})`}>
-        <rect
-          key="1"
-          x="0"
-          y="0"
-          width={WIDTH}
-          height={DEPTH}
-          style={{
-            stroke: element.selected ? "#0096fd" : "#000",
-            strokeWidth: "2px",
-            fill: "#84e1ce",
-          }}
-        />
-        <text
-          key="2"
-          x="0"
-          y="0"
-          transform={`translate(${WIDTH / 2}, ${
-            DEPTH / 2
-          }) scale(1,-1) rotate(${textRotation})`}
-          style={{ textAnchor: "middle", fontSize: "11px" }}
-        >
-          {element.type}
-        </text>
-      </g>
-    );
-  },
+        let textRotation = 0;
+        if (Math.sin((angle * Math.PI) / 180) < 0) {
+            textRotation = 180;
+        }
 
-  render3D: function (element, layer, scene) {
-    let newAltitude = element.properties.get("altitude").get("length");
+        return (
+            <g transform={`translate(${-WIDTH / 2},${-DEPTH / 2})`}>
+                <rect
+                    key="1"
+                    x="0"
+                    y="0"
+                    width={WIDTH}
+                    height={DEPTH}
+                    style={{
+                        stroke: element.selected ? "#0096fd" : "#000",
+                        strokeWidth: "2px",
+                        fill: "#84e1ce",
+                    }}
+                />
+                <text
+                    key="2"
+                    x="0"
+                    y="0"
+                    transform={`translate(${WIDTH / 2}, ${
+                        DEPTH / 2
+                    }) scale(1,-1) rotate(${textRotation})`}
+                    style={{ textAnchor: "middle", fontSize: "11px" }}
+                >
+                    {element.type}
+                </text>
+            </g>
+        );
+    },
 
-    /*************** lod max *******************/
+    render3D: function (element, layer, scene) {
+        let newAltitude = element.properties.get("altitude").get("length");
 
-    let deskdoubleMaxLOD = new Three.Object3D();
-    deskdoubleMaxLOD.add(objectMaxLOD.clone());
+        /*************** lod max *******************/
 
-    let valueObject = new Three.Box3().setFromObject(deskdoubleMaxLOD);
+        let deskdoubleMaxLOD = new Three.Object3D();
+        deskdoubleMaxLOD.add(objectMaxLOD.clone());
 
-    let deltaX = Math.abs(valueObject.max.x - valueObject.min.x);
-    let deltaY = Math.abs(valueObject.max.y - valueObject.min.y);
-    let deltaZ = Math.abs(valueObject.max.z - valueObject.min.z);
+        let valueObject = new Three.Box3().setFromObject(deskdoubleMaxLOD);
 
-    deskdoubleMaxLOD.rotation.y += Math.PI;
-    deskdoubleMaxLOD.position.y += newAltitude;
-    deskdoubleMaxLOD.scale.set(WIDTH / deltaX, HEIGHT / deltaY, DEPTH / deltaZ);
+        let deltaX = Math.abs(valueObject.max.x - valueObject.min.x);
+        let deltaY = Math.abs(valueObject.max.y - valueObject.min.y);
+        let deltaZ = Math.abs(valueObject.max.z - valueObject.min.z);
 
-    /*************** lod min *******************/
+        deskdoubleMaxLOD.rotation.y += Math.PI;
+        deskdoubleMaxLOD.position.y += newAltitude;
+        deskdoubleMaxLOD.scale.set(
+            WIDTH / deltaX,
+            HEIGHT / deltaY,
+            DEPTH / deltaZ
+        );
 
-    let deskdoubleMinLOD = new Three.Object3D();
-    deskdoubleMinLOD.add(objectMinLOD.clone());
-    deskdoubleMinLOD.rotation.y += Math.PI;
-    deskdoubleMinLOD.position.y += newAltitude;
-    deskdoubleMinLOD.scale.set(WIDTH / deltaX, HEIGHT / deltaY, DEPTH / deltaZ);
+        /*************** lod min *******************/
 
-    /**** all level of detail ***/
+        let deskdoubleMinLOD = new Three.Object3D();
+        deskdoubleMinLOD.add(objectMinLOD.clone());
+        deskdoubleMinLOD.rotation.y += Math.PI;
+        deskdoubleMinLOD.position.y += newAltitude;
+        deskdoubleMinLOD.scale.set(
+            WIDTH / deltaX,
+            HEIGHT / deltaY,
+            DEPTH / deltaZ
+        );
 
-    let lod = new Three.LOD();
+        /**** all level of detail ***/
 
-    lod.addLevel(deskdoubleMaxLOD, 200);
-    lod.addLevel(deskdoubleMinLOD, 900);
-    lod.updateMatrix();
-    lod.matrixAutoUpdate = false;
+        let lod = new Three.LOD();
 
-    if (element.selected) {
-      let bbox = new Three.BoxHelper(lod, 0x99c3fb);
-      bbox.material.linewidth = 5;
-      bbox.renderOrder = 1000;
-      bbox.material.depthTest = false;
-      lod.add(bbox);
-    }
+        lod.addLevel(deskdoubleMaxLOD, 200);
+        lod.addLevel(deskdoubleMinLOD, 900);
+        lod.updateMatrix();
+        lod.matrixAutoUpdate = false;
 
-    return Promise.resolve(lod);
-  },
+        if (element.selected) {
+            let bbox = new Three.BoxHelper(lod, 0x99c3fb);
+            bbox.material.linewidth = 5;
+            bbox.renderOrder = 1000;
+            bbox.material.depthTest = false;
+            lod.add(bbox);
+        }
+
+        return Promise.resolve(lod);
+    },
 };

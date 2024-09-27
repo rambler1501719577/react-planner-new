@@ -17,11 +17,11 @@ import {
     Plugins as PlannerPlugins,
 } from "react-planner"; //react-planner
 
-//define state
+//define state, ./src/models/State
 let AppState = Map({
     "react-planner": new PlannerModels.State(),
 });
-
+console.log(AppState);
 //define reducer
 let reducer = (state, action) => {
     state = state || AppState;

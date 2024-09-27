@@ -7,164 +7,174 @@ import convert from "convert-units";
 let cached3DTV = null;
 
 export default {
-  name: "tv",
-  prototype: "items",
+    name: "tv",
+    prototype: "items",
 
-  info: {
-    title: "tv",
-    tag: ["furnishing", "electronics"],
-    description: "LCD TV",
-    image: require("./tv.png"),
-  },
-
-  properties: {
-    altitude: {
-      label: "Altitude",
-      type: "length-measure",
-      defaultValue: {
-        length: 0,
-      },
+    info: {
+        title: "tv",
+        tag: ["furnishing", "electronics"],
+        description: "LCD TV",
+        image: require("./tv.png"),
     },
-  },
 
-  render2D: function (element, layer, scene) {
-    let width = { length: 1.6, unit: "ft" };
-    let depth = { length: 0.59, unit: "ft" };
+    properties: {
+        altitude: {
+            label: "Altitude",
+            type: "length-measure",
+            defaultValue: {
+                length: 0,
+            },
+        },
+    },
 
-    let newWidth = convert(width.length).from(width.unit).to(scene.unit);
-    let newDepth = convert(depth.length).from(depth.unit).to(scene.unit);
+    render2D: function (element, layer, scene) {
+        let width = { length: 1.6, unit: "ft" };
+        let depth = { length: 0.59, unit: "ft" };
 
-    let angle = element.rotation + 90;
+        let newWidth = convert(width.length).from(width.unit).to(scene.unit);
+        let newDepth = convert(depth.length).from(depth.unit).to(scene.unit);
 
-    let textRotation = 0;
-    if (Math.sin((angle * Math.PI) / 180) < 0) {
-      textRotation = 180;
-    }
+        let angle = element.rotation + 90;
 
-    let style = {
-      stroke: element.selected ? "#0096fd" : "#000",
-      strokeWidth: "2px",
-      fill: "#84e1ce",
-    };
-    let arrow_style = {
-      stroke: element.selected ? "#0096fd" : null,
-      strokeWidth: "2px",
-      fill: "#84e1ce",
-    };
+        let textRotation = 0;
+        if (Math.sin((angle * Math.PI) / 180) < 0) {
+            textRotation = 180;
+        }
 
-    return (
-      <g transform={`translate(${-newWidth / 2},${-newDepth / 2})`}>
-        <rect
-          key="1"
-          x="0"
-          y="0"
-          width={newWidth}
-          height={newDepth}
-          style={style}
-        />
-        <line
-          key="2"
-          x1={newWidth / 2}
-          x2={newWidth / 2}
-          y1={newDepth}
-          y2={1.5 * newDepth}
-          style={arrow_style}
-        />
-        <line
-          key="3"
-          x1={0.35 * newWidth}
-          x2={newWidth / 2}
-          y1={1.2 * newDepth}
-          y2={1.5 * newDepth}
-          style={arrow_style}
-        />
-        <line
-          key="4"
-          x1={newWidth / 2}
-          x2={0.65 * newWidth}
-          y1={1.5 * newDepth}
-          y2={1.2 * newDepth}
-          style={arrow_style}
-        />
-        <text
-          key="5"
-          x="0"
-          y="0"
-          transform={`translate(${newWidth / 2}, ${
-            newDepth / 2
-          }) scale(1,-1) rotate(${textRotation})`}
-          style={{ textAnchor: "middle", fontSize: "11px" }}
-        >
-          {element.type}
-        </text>
-      </g>
-    );
-  },
+        let style = {
+            stroke: element.selected ? "#0096fd" : "#000",
+            strokeWidth: "2px",
+            fill: "#84e1ce",
+        };
+        let arrow_style = {
+            stroke: element.selected ? "#0096fd" : null,
+            strokeWidth: "2px",
+            fill: "#84e1ce",
+        };
 
-  // 这里应该可以通过gltf-loader加载相应的贴图, 应用材质
-  render3D: function (element, layer, scene) {
-    let width = { length: 1.6, unit: "ft" };
-    let depth = { length: 0.59, unit: "ft" };
-    let height = { length: 1.05, unit: "ft" };
+        return (
+            <g transform={`translate(${-newWidth / 2},${-newDepth / 2})`}>
+                <rect
+                    key="1"
+                    x="0"
+                    y="0"
+                    width={newWidth}
+                    height={newDepth}
+                    style={style}
+                />
+                <line
+                    key="2"
+                    x1={newWidth / 2}
+                    x2={newWidth / 2}
+                    y1={newDepth}
+                    y2={1.5 * newDepth}
+                    style={arrow_style}
+                />
+                <line
+                    key="3"
+                    x1={0.35 * newWidth}
+                    x2={newWidth / 2}
+                    y1={1.2 * newDepth}
+                    y2={1.5 * newDepth}
+                    style={arrow_style}
+                />
+                <line
+                    key="4"
+                    x1={newWidth / 2}
+                    x2={0.65 * newWidth}
+                    y1={1.5 * newDepth}
+                    y2={1.2 * newDepth}
+                    style={arrow_style}
+                />
+                <text
+                    key="5"
+                    x="0"
+                    y="0"
+                    transform={`translate(${newWidth / 2}, ${
+                        newDepth / 2
+                    }) scale(1,-1) rotate(${textRotation})`}
+                    style={{ textAnchor: "middle", fontSize: "11px" }}
+                >
+                    {element.type}
+                </text>
+            </g>
+        );
+    },
 
-    let onLoadItem = (object) => {
-      let newWidth = convert(width.length).from(width.unit).to(scene.unit);
-      let newHeight = convert(height.length).from(height.unit).to(scene.unit);
-      let newDepth = convert(depth.length).from(depth.unit).to(scene.unit);
+    // 这里应该可以通过gltf-loader加载相应的贴图, 应用材质
+    render3D: function (element, layer, scene) {
+        let width = { length: 1.6, unit: "ft" };
+        let depth = { length: 0.59, unit: "ft" };
+        let height = { length: 1.05, unit: "ft" };
 
-      let newAltitude = element.properties.get("altitude").get("length");
+        let onLoadItem = (object) => {
+            let newWidth = convert(width.length)
+                .from(width.unit)
+                .to(scene.unit);
+            let newHeight = convert(height.length)
+                .from(height.unit)
+                .to(scene.unit);
+            let newDepth = convert(depth.length)
+                .from(depth.unit)
+                .to(scene.unit);
 
-      if (element.selected) {
-        let box = new Three.BoxHelper(object, 0x99c3fb);
-        box.material.linewidth = 2;
-        box.material.depthTest = false;
-        box.renderOrder = 1000;
-        object.add(box);
-      }
+            let newAltitude = element.properties.get("altitude").get("length");
 
-      object.scale.set(
-        newWidth / width.length,
-        newHeight / height.length,
-        newDepth / depth.length
-      );
+            if (element.selected) {
+                let box = new Three.BoxHelper(object, 0x99c3fb);
+                box.material.linewidth = 2;
+                box.material.depthTest = false;
+                box.renderOrder = 1000;
+                object.add(box);
+            }
 
-      // Normalize the origin of the object
-      let boundingBox = new Three.Box3().setFromObject(object);
+            object.scale.set(
+                newWidth / width.length,
+                newHeight / height.length,
+                newDepth / depth.length
+            );
 
-      let center = [
-        (boundingBox.max.x - boundingBox.min.x) / 2 + boundingBox.min.x,
-        (boundingBox.max.y - boundingBox.min.y) / 2 + boundingBox.min.y,
-        (boundingBox.max.z - boundingBox.min.z) / 2 + boundingBox.min.z,
-      ];
+            // Normalize the origin of the object
+            let boundingBox = new Three.Box3().setFromObject(object);
 
-      object.position.x -= center[0];
-      object.position.y -=
-        center[1] - (boundingBox.max.y - boundingBox.min.y) / 2;
-      object.position.z -= center[2];
+            let center = [
+                (boundingBox.max.x - boundingBox.min.x) / 2 + boundingBox.min.x,
+                (boundingBox.max.y - boundingBox.min.y) / 2 + boundingBox.min.y,
+                (boundingBox.max.z - boundingBox.min.z) / 2 + boundingBox.min.z,
+            ];
 
-      object.position.y += newAltitude;
+            object.position.x -= center[0];
+            object.position.y -=
+                center[1] - (boundingBox.max.y - boundingBox.min.y) / 2;
+            object.position.z -= center[2];
 
-      object.rotation.y = Math.PI;
+            object.position.y += newAltitude;
 
-      // object.position.x = 0;
-      // object.position.y = 0;
-      // object.position.z = 0;
-      console.log(object.position.x, object.position.y, object.position.z);
+            object.rotation.y = Math.PI;
 
-      return object;
-    };
+            // object.position.x = 0;
+            // object.position.y = 0;
+            // object.position.z = 0;
+            console.log(
+                object.position.x,
+                object.position.y,
+                object.position.z
+            );
 
-    if (cached3DTV) {
-      return Promise.resolve(onLoadItem(cached3DTV.clone()));
-    }
+            return object;
+        };
 
-    let mtl = require("./tv.mtl");
-    let obj = require("./tv.obj");
+        if (cached3DTV) {
+            return Promise.resolve(onLoadItem(cached3DTV.clone()));
+        }
 
-    // obj + mtl方式加载模型和贴图
-    return loadObjWithMaterial(mtl, obj, "").then((object) => {
-      cached3DTV = object;
-      return onLoadItem(cached3DTV.clone());
-    });
-  },
+        let mtl = require("./tv.mtl");
+        let obj = require("./tv.obj");
+
+        // obj + mtl方式加载模型和贴图
+        return loadObjWithMaterial(mtl, obj, "").then((object) => {
+            cached3DTV = object;
+            return onLoadItem(cached3DTV.clone());
+        });
+    },
 };

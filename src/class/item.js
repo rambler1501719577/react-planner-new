@@ -11,6 +11,7 @@ import {
 
 class Item {
     static create(state, layerID, type, x, y, width, height, rotation) {
+        debugger;
         let itemID = IDBroker.acquireID();
 
         let item = state.catalog.factoryElement(type, {

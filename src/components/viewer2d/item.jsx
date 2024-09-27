@@ -34,16 +34,27 @@ export default function Item({ layer, item, scene, catalog }) {
         >
             {renderedItem}
             <If condition={item.selected}>
-                <g
-                    data-element-root
-                    data-prototype={item.prototype}
-                    data-id={item.id}
-                    data-selected={item.selected}
-                    data-layer={layer.id}
-                    data-part="rotation-anchor"
-                >
-                    <circle cx="0" cy="150" r="10" style={STYLE_CIRCLE} />
-                    <circle cx="0" cy="0" r="150" style={STYLE_CIRCLE2} />
+                <g>
+                    {/* 外层选中框 */}
+                    <rect
+                        width="50"
+                        height="50"
+                        x="-25"
+                        y="-25"
+                        style={{ fill: "none", stroke: "red" }}
+                    />
+                    {/* 旋转 */}
+                    <g
+                        data-element-root
+                        data-prototype={item.prototype}
+                        data-id={item.id}
+                        data-selected={item.selected}
+                        data-layer={layer.id}
+                        data-part="rotation-anchor"
+                    >
+                        <circle cx="0" cy="150" r="10" style={STYLE_CIRCLE} />
+                        {/* <circle cx="0" cy="0" r="150" style={STYLE_CIRCLE2} /> */}
+                    </g>
                 </g>
             </If>
         </g>

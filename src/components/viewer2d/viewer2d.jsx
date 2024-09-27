@@ -174,12 +174,14 @@ export default function Viewer2D(
         let event = viewerEvent.originalEvent;
 
         //workaround that allow imageful component to work
+        // INFO:通知imageful根据事件做一些操作?(待验证)
         let evt = new Event("mousedown-planner-event");
         evt.viewerEvent = viewerEvent;
         document.dispatchEvent(evt);
 
         let { x, y } = mapCursorPosition(viewerEvent);
 
+        // 这部分主要是针对已经选中的元素做一些操作, 比如旋转, 划线等
         if (mode === constants.MODE_IDLE) {
             let elementData = extractElementData(event.target);
             if (!elementData || !elementData.selected) return;
@@ -207,7 +209,7 @@ export default function Viewer2D(
 
                 case "items":
                     if (elementData.part === "rotation-anchor") {
-                        debugger;
+                        // 所有begin开头的都是更新mode, 在监控鼠标事件去实现
                         itemsActions.beginRotatingItem(
                             elementData.layer,
                             elementData.id,
