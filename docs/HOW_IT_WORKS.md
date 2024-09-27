@@ -24,7 +24,7 @@
 
 在 mousemove 事件的处理函数中, 会根据 x, y 值判断移动了多少角度, 在接近 90° 倍数时, 会自动吸附
 
-# redux 数据梳理
+# redux 数据初始化
 
 1. src/renderer.jsx 中
 
@@ -73,9 +73,9 @@ export class State extends Record(
 ) {}
 ```
 
-# 添加元素的属性
+# 添加元素的属性(attribute!!!)
 
-添加的元素都在保存在 redux 的 layers 中, 在画布中添加 item(自定义)元素, 通过审查工具审查 redux 值的变化, 发现在 scene -> layer -> items 可以找到这个元素, 根据这个元素的一些特定属性去项目中搜索, 经过推敲, 可以锁定 Item 构造函数
+添加的元素都在保存在 redux 的 layers 中, 在画布中添加 item(自定义)元素, 通过审查工具审查 redux 值的变化, 发现在 scene -> layer -> items 可以找到这个元素, 根据这个元素的一些特定属性(rotation)去项目中搜索, 经过推敲, 可以锁定 Item 构造函数
 
 ```javascript
 export class Item extends Record(
@@ -114,8 +114,8 @@ const sharedAttributes = {
 
 # 添加节点原理
 
-突破口在 catalog-list 这个文件, 点击"+", 弹出候选列表, 点击元素后, mode 切换为 MODE_DRAWING_ITEM, 此时 state 中的 selectedSupport 变为当前选中元素的 currentId 和 type, 此时所有属性都可以通过 id 和 type 进行查询.
-选中某个 "元素" 后, mode 转为 MODE_DRAWING_ITEM, 此时 content.jsx 根据条件判断会渲染<View2D />这个组件, 组件中绑定 mousemove 事件, 在 move 事件中会走
+突破口在 catalog-list 这个文件, 在左侧菜单栏点击"+", 弹出候选列表, 点击元素后, 执行`select()`函数, mode 切换为 MODE_DRAWING_ITEM, 此时 `state` 中的 selectedSupport 变为当前选中元素的 currentId 和 type(为了记住当前选中的是哪个 item 以及 item 所属类别)
+此时 content.jsx 根据 mode 条件判断会渲染<View2D />这个组件, 组件中绑定 mousemove 事件, 在 move 事件中会走
 
 ```javascript
 let onMouseMove = (viewerEvent) => {
@@ -127,3 +127,53 @@ let onMouseMove = (viewerEvent) => {
     }
 };
 ```
+
+在这里面会尝试更新绘制的 item 的位置, 但是因为第一次创建, 没有 currentID, 会执行 create 函数创建一个新`item`
+
+```javascript
+// src/class/item.js
+static updateDrawingItem(state, layerID, x, y) {
+        if (state.hasIn(["drawingSupport", "currentID"])) {
+            // 更新位置
+        }else {
+            // 通过new Item创建一个新Item, 并监听鼠标移动更新位置
+            // this.create ==> Item静态函数create
+            let { updatedState: stateI, item } = this.create(
+                state, layerID, state.getIn(["drawingSupport", "type"]),
+                x, y, 200, 100, 0
+            );
+            state = Item.select(stateI, layerID, item.id).updatedState;
+        }
+        return { updatedState: state };
+    }
+```
+
+create 函数如下
+
+```javascript
+static create(state, layerID, type, x, y, width, height, rotation) {
+        let itemID = IDBroker.acquireID();
+
+        let item = state.catalog.factoryElement(type, {
+            id: itemID,
+            name: NameGenerator.generateName("items",state.catalog.getIn(["elements", type, "info", "title"])),
+            type, height, width, x, y, rotation,
+        });
+
+        state = state.setIn(
+            ["scene", "layers", layerID, "items", itemID], item
+        );
+
+        return { updatedState: state, item };
+    }
+```
+
+这段代码创建了一个 item 并通过 state.setIn 函数, 通过 key 逐个访问 Map 并将 item 插入到指定位置
+同理 state.getIn 也是一样的用法, 比如我想获取 scene.layers.defaultLayer.items.abcded 这个元素
+只需要
+
+```javascript
+state.getIn(["scene", "layers", "defaultLayer", "items", "abcded"]);
+```
+
+类似 vuex 中的 mapState 辅助函数

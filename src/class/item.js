@@ -11,7 +11,6 @@ import {
 
 class Item {
     static create(state, layerID, type, x, y, width, height, rotation) {
-        debugger;
         let itemID = IDBroker.acquireID();
 
         let item = state.catalog.factoryElement(type, {
@@ -90,7 +89,10 @@ class Item {
         return { updatedState: state };
     }
 
+    // 移动时, 只知道图层id, 当前鼠标x,y坐标, 以及选中的元素, 嗯, 没错,
+    // 那就要从选中的元素查找到sharedAttributes, 在这里赋值
     static updateDrawingItem(state, layerID, x, y) {
+        // INFO: 这里都没定义width和height, 在下一步直接硬编码写进去
         if (state.hasIn(["drawingSupport", "currentID"])) {
             state = state.updateIn(
                 [
@@ -103,6 +105,8 @@ class Item {
                 (item) => item.merge({ x, y })
             );
         } else {
+            // 测试item, 在这里通过getIn获取item, 并将宽高放到properties参数中
+            const testItem = state.getIn(["scene"]);
             let { updatedState: stateI, item } = this.create(
                 state,
                 layerID,

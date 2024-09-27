@@ -583,7 +583,7 @@ export default {
 
     properties: {
         widthA: {
-            label: "larghezza lato A",
+            label: "上线段宽度",
             type: "length-measure",
             defaultValue: {
                 length: 400,
@@ -591,7 +591,7 @@ export default {
             },
         },
         widthB: {
-            label: "larghezza lato B",
+            label: "下线段宽度",
             type: "length-measure",
             defaultValue: {
                 length: 400,
@@ -599,7 +599,7 @@ export default {
             },
         },
         depth: {
-            label: "depth",
+            label: "桌面宽度",
             type: "length-measure",
             defaultValue: {
                 length: 90,
@@ -607,7 +607,7 @@ export default {
             },
         },
         height: {
-            label: "height",
+            label: "桌面高度",
             type: "length-measure",
             defaultValue: {
                 length: 100,
@@ -615,7 +615,7 @@ export default {
             },
         },
         altitude: {
-            label: "altitude",
+            label: "海拔高度",
             type: "length-measure",
             defaultValue: {
                 length: 0,
