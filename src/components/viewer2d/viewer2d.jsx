@@ -169,6 +169,7 @@ export default function Viewer2D(
         viewerEvent.originalEvent.stopPropagation();
     };
 
+    // 旋转, 点击, 缩放都在这里触发, 通过elementData.part
     let onMouseDown = (viewerEvent) => {
         let event = viewerEvent.originalEvent;
 
@@ -205,14 +206,15 @@ export default function Viewer2D(
                     break;
 
                 case "items":
-                    if (elementData.part === "rotation-anchor")
+                    if (elementData.part === "rotation-anchor") {
+                        debugger;
                         itemsActions.beginRotatingItem(
                             elementData.layer,
                             elementData.id,
                             x,
                             y
                         );
-                    else
+                    } else
                         itemsActions.beginDraggingItem(
                             elementData.layer,
                             elementData.id,

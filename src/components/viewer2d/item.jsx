@@ -6,7 +6,7 @@ const STYLE_CIRCLE = {
     fill: "red",
     stroke: "#0096fd",
     cursor: "ew-resize",
-    cursor: "pointer",
+    cursor: "ew-resize",
 };
 
 const STYLE_CIRCLE2 = {
