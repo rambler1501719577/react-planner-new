@@ -177,3 +177,127 @@ state.getIn(["scene", "layers", "defaultLayer", "items", "abcded"]);
 ```
 
 类似 vuex 中的 mapState 辅助函数
+
+# 扩展 width 和 height 问题
+
+此案例以 src/catalog/catalogs/items/camera 为例
+在 catalog/catalogs/item 所有 item 的 properties 添加 width 和 height 属性,
+
+```javascript
+export default {
+    name: "camera",
+    prototype: "items",
+    properties: {
+        altitude: {
+            label: "altitude",
+            type: "length-measure",
+            defaultValue: {
+                length: 100,
+                unit: "cm",
+            },
+        },
+        // NOTE: 此处增加width属性
+        width: {
+            label: "宽度",
+            type: "length-measure",
+            defaultValue: {
+                length: 100,
+                unit: "cm",
+            },
+        },
+        // NOTE: 此处增加height属性
+        height: {
+            label: "高度",
+            type: "length-measure",
+            defaultValue: {
+                length: 100,
+                unit: "cm",
+            },
+        },
+    },
+};
+```
+
+将 item 自身渲染逻辑的宽高由文件内全局变量 WIDTH 和 HEIGHT 及 DEPTH 改为 properties 中的 height 和 width
+
+```javascript
+render2D: function (element, layer, scene) {
+    let angle = element.rotation + 90;
+    let textRotation = 0;
+    if (Math.sin((angle * Math.PI) / 180) < 0) {
+        textRotation = 180;
+    }
+    return (
+        <g
+            transform={`translate(${
+                -this.properties.width.defaultValue.length / 2
+            },${-this.properties.height.defaultValue.length / 2}`}
+        >
+            <rect
+                key="1"
+                x="0"
+                y="0"
+                width={this.properties.width.defaultValue.length}
+                height={this.properties.height.defaultValuelength}
+                style={{
+                    stroke: element.selected ? "#0096fd" :"#000",
+                    strokeWidth: "2px",
+                    fill: "#84e1ce",
+                }}
+            />
+            <text
+                key="2"
+                x="0"
+                y="0"
+                transform={`translate(${
+                    this.properties.width.defaultValue.length / 2
+                }, ${
+                    this.properties.height.defaultValue.length /2
+                }) scale(1,-1) rotate(${textRotation})`}
+                style={{ textAnchor: "middle", fontSize:"11px" }}
+            >
+                {element.type}
+            </text>
+        </g>
+    );
+},
+```
+
+同时要修改 src/class/item 中的 updateDrawingItem/updateDrawingArea/updateDrawingHoles 等函数, 将硬编码 200, 100 的宽高改为从 redux(elements/item/如 camera/peoperties/height/defaultValue/length)中取值
+js 读取代码如下
+
+```javascript
+updateDrawingItem(state, layerID, x, y) {
+    if (state.hasIn(["drawingSupport", "currentID"])) {
+        // 略: 更新位置信息
+    } else {
+        let { updatedState: stateI, item } = this.create(
+            state,
+            layerID,
+            state.getIn(["drawingSupport", "type"]),
+            x,
+            y,
+            state.catalog.getIn([
+                "elements",
+                state.getIn(["drawingSupport", "type"]),
+                "properties",
+                "width",
+                "defaultValue",
+                "length",
+            ]),
+            state.catalog.getIn([
+                "elements",
+                state.getIn(["drawingSupport", "type"]),
+                "properties",
+                "height",
+                "defaultValue",
+                "length",
+            ]),
+            0
+        );
+        state = Item.select(stateI, layerID, item.id).updatedState;
+        state = state.setIn(["drawingSupport", "currentID"], item.id);
+    }
+    return { updatedState: state };
+    }
+```

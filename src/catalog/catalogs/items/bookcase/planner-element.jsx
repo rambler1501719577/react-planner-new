@@ -1,8 +1,8 @@
 import * as Three from "three";
 import React from "react";
 
-const WIDTH = 80;
-const DEPTH = 80;
+const WIDTH = 200;
+const DEPTH = 200;
 const HEIGHT = 200;
 
 const textureLoader = new Three.TextureLoader();
@@ -151,10 +151,37 @@ export default {
                 unit: "cm",
             },
         },
+        width: {
+            label: "宽度",
+            type: "length-measure",
+            defaultValue: {
+                length: 80,
+                unit: "cm",
+            },
+        },
+        depth: {
+            label: "深度",
+            type: "length-measure",
+            defaultValue: {
+                length: 60,
+                unit: "cm",
+            },
+        },
+        height: {
+            label: "高度",
+            type: "length-measure",
+            defaultValue: {
+                length: 180,
+                unit: "cm",
+            },
+        },
     },
 
     render2D: function (element, layer, scene) {
         let angle = element.rotation + 90;
+
+        const width = this.properties.width.defaultValue.length;
+        const depth = this.properties.depth.defaultValue.length;
 
         let textRotation = 0;
         if (Math.sin((angle * Math.PI) / 180) < 0) {
@@ -168,21 +195,21 @@ export default {
         };
 
         return (
-            <g transform={`translate(${-WIDTH / 2},${-DEPTH / 2})`}>
+            <g transform={`translate(${-width / 2},${-depth / 2})`}>
                 <rect
                     key="1"
                     x="0"
                     y="0"
-                    width={WIDTH}
-                    height={DEPTH}
+                    width={width}
+                    height={depth}
                     style={rect_style}
                 />
                 <text
                     key="2"
                     x="0"
                     y="0"
-                    transform={`translate(${WIDTH / 2}, ${
-                        DEPTH / 2
+                    transform={`translate(${width / 2}, ${
+                        depth / 2
                     }) scale(1,-1) rotate(${textRotation})`}
                     style={{ textAnchor: "middle", fontSize: "11px" }}
                 >
@@ -194,6 +221,10 @@ export default {
 
     render3D: function (element, layer, scene) {
         let newAltitude = element.properties.get("altitude").get("length");
+
+        const depth = this.properties.depth.defaultValue.length;
+        const width = this.properties.width.defaultValue.length;
+        const height = this.properties.height.defaultValue.length;
 
         /**************** lod max ******************/
 
@@ -208,11 +239,11 @@ export default {
 
         bookcaseMaxLOD.rotation.y += Math.PI / 2;
         bookcaseMaxLOD.position.y += newAltitude;
-        bookcaseMaxLOD.position.z += WIDTH / 2;
+        bookcaseMaxLOD.position.z += width / 2;
         bookcaseMaxLOD.scale.set(
-            WIDTH / deltaX,
-            HEIGHT / deltaY,
-            DEPTH / deltaZ
+            width / deltaX,
+            height / deltaY,
+            depth / deltaZ
         );
 
         /**************** lod min ******************/
@@ -221,11 +252,11 @@ export default {
         bookcaseMinLOD.add(objectMinLOD.clone());
         bookcaseMinLOD.rotation.y += Math.PI / 2;
         bookcaseMinLOD.position.y += newAltitude;
-        bookcaseMinLOD.position.z += WIDTH / 2;
+        bookcaseMinLOD.position.z += width / 2;
         bookcaseMinLOD.scale.set(
-            WIDTH / deltaX,
-            HEIGHT / deltaY,
-            DEPTH / deltaZ
+            width / deltaX,
+            height / deltaY,
+            depth / deltaZ
         );
 
         /**** all level of detail ***/

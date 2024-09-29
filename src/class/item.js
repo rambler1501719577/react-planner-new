@@ -20,8 +20,8 @@ class Item {
                 state.catalog.getIn(["elements", type, "info", "title"])
             ),
             type,
-            height,
             width,
+            height,
             x,
             y,
             rotation,
@@ -89,10 +89,9 @@ class Item {
         return { updatedState: state };
     }
 
-    // 移动时, 只知道图层id, 当前鼠标x,y坐标, 以及选中的元素, 嗯, 没错,
-    // 那就要从选中的元素查找到sharedAttributes, 在这里赋值
+    // 移动时, 只知道图层id, 当前鼠标x,y坐标, 以及选中的元素
+    // 那就要从选中的元素查找到sharedAttributes, 在这里赋值, 嗯, 没错
     static updateDrawingItem(state, layerID, x, y) {
-        // INFO: 这里都没定义width和height, 在下一步直接硬编码写进去
         if (state.hasIn(["drawingSupport", "currentID"])) {
             state = state.updateIn(
                 [
@@ -105,16 +104,28 @@ class Item {
                 (item) => item.merge({ x, y })
             );
         } else {
-            // 测试item, 在这里通过getIn获取item, 并将宽高放到properties参数中
-            const testItem = state.getIn(["scene"]);
             let { updatedState: stateI, item } = this.create(
                 state,
                 layerID,
                 state.getIn(["drawingSupport", "type"]),
                 x,
                 y,
-                200,
-                100,
+                state.catalog.getIn([
+                    "elements",
+                    state.getIn(["drawingSupport", "type"]),
+                    "properties",
+                    "width",
+                    "defaultValue",
+                    "length",
+                ]),
+                state.catalog.getIn([
+                    "elements",
+                    state.getIn(["drawingSupport", "type"]),
+                    "properties",
+                    "depth",
+                    "defaultValue",
+                    "length",
+                ]),
                 0
             );
             state = Item.select(stateI, layerID, item.id).updatedState;

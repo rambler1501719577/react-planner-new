@@ -486,10 +486,39 @@ export default {
                 unit: "cm",
             },
         },
+        width: {
+            label: "宽度",
+            type: "length-measure",
+            defaultValue: {
+                length: 40,
+                unit: "cm",
+            },
+        },
+        depth: {
+            label: "深度",
+            type: "length-measure",
+            defaultValue: {
+                length: 60,
+                unit: "cm",
+            },
+        },
+        height: {
+            label: "高度",
+            type: "length-measure",
+            defaultValue: {
+                length: 60,
+                unit: "cm",
+            },
+        },
+        // const WIDTH = 10;
+        // const DEPTH = 20;
+        // const HEIGHT = 20;
     },
 
     render2D: function (element, layer, scene) {
         let angle = element.rotation + 90;
+        const width = this.properties.width.defaultValue.length;
+        const depth = this.properties.depth.defaultValue.length;
 
         let textRotation = 0;
         if (Math.sin((angle * Math.PI) / 180) < 0) {
@@ -497,13 +526,13 @@ export default {
         }
 
         return (
-            <g transform={`translate(${-WIDTH / 2},${-DEPTH / 2})`}>
+            <g transform={`translate(${-width / 2},${-depth / 2})`}>
                 <rect
                     key="1"
                     x="0"
                     y="0"
-                    width={WIDTH}
-                    height={DEPTH}
+                    width={width}
+                    height={depth}
                     style={{
                         stroke: element.selected ? "#0096fd" : "#000",
                         strokeWidth: "2px",
@@ -514,8 +543,8 @@ export default {
                     key="2"
                     x="0"
                     y="0"
-                    transform={`translate(${WIDTH / 2}, ${
-                        DEPTH / 2
+                    transform={`translate(${width / 2}, ${
+                        depth / 2
                     }) scale(1,-1) rotate(${textRotation})`}
                     style={{ textAnchor: "middle", fontSize: "11px" }}
                 >
@@ -527,6 +556,9 @@ export default {
 
     render3D: function (element, layer, scene) {
         let newAltitude = element.properties.get("altitude").get("length");
+        const depth = this.properties.depth.defaultValue.length;
+        const width = this.properties.width.defaultValue.length;
+        const height = this.properties.height.defaultValue.length;
 
         /**************** LOD max ***********************/
 
@@ -539,12 +571,12 @@ export default {
         let deltaY = Math.abs(aa.max.y - aa.min.y);
         let deltaZ = Math.abs(aa.max.z - aa.min.z);
 
-        video_cameraMaxLOD.position.y += HEIGHT / 8 + newAltitude;
-        video_cameraMaxLOD.position.z += DEPTH / 2;
+        video_cameraMaxLOD.position.y += height / 8 + newAltitude;
+        video_cameraMaxLOD.position.z += depth / 2;
         video_cameraMaxLOD.scale.set(
-            DEPTH / deltaZ,
-            HEIGHT / deltaY,
-            WIDTH / deltaX
+            depth / deltaZ,
+            height / deltaY,
+            width / deltaX
         );
 
         /**************** LOD min ***********************/
@@ -552,12 +584,12 @@ export default {
         let video_cameraMinLOD = new Three.Object3D();
         video_cameraMinLOD.add(objectMinLOD.clone());
 
-        video_cameraMinLOD.position.y += HEIGHT / 8 + newAltitude;
-        video_cameraMinLOD.position.z += DEPTH / 2;
+        video_cameraMinLOD.position.y += height / 8 + newAltitude;
+        video_cameraMinLOD.position.z += depth / 2;
         video_cameraMinLOD.scale.set(
-            DEPTH / deltaZ,
-            HEIGHT / deltaY,
-            WIDTH / deltaX
+            depth / deltaZ,
+            height / deltaY,
+            width / deltaX
         );
 
         /**** all level of detail ***/
