@@ -1,10 +1,6 @@
 import * as Three from "three";
 import React from "react";
 
-const WIDTH = 200;
-const DEPTH = 200;
-const HEIGHT = 200;
-
 const textureLoader = new Three.TextureLoader();
 const woodMaterial = textureLoader.load(require("./wood.jpg"));
 const bookTexture1 = textureLoader.load(require("./bookTexture1.jpg"));

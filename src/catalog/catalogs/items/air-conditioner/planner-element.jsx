@@ -1,5 +1,6 @@
 import * as Three from "three";
 import React from "react";
+import { render2D } from "../../utils/common-render";
 
 const WIDTH = 90;
 const DEPTH = 40;
@@ -315,43 +316,74 @@ export default {
                 unit: "cm",
             },
         },
+        width: {
+            label: "宽度",
+            type: "length-measure",
+            defaultValue: {
+                length: 190,
+                unit: "cm",
+            },
+        },
+        depth: {
+            label: "深度",
+            type: "length-measure",
+            defaultValue: {
+                length: 40,
+                unit: "cm",
+            },
+        },
+        height: {
+            label: "高度",
+            type: "length-measure",
+            defaultValue: {
+                length: 30,
+                unit: "cm",
+            },
+        },
     },
 
     render2D: function (element, layer, scene) {
-        let angle = element.rotation + 90;
-
-        let textRotation = 0;
-        if (Math.sin((angle * Math.PI) / 180) < 0) {
-            textRotation = 180;
-        }
-
-        return (
-            <g transform={`translate(${-WIDTH / 2},${-DEPTH / 2})`}>
-                <rect
-                    key="1"
-                    x="0"
-                    y="0"
-                    width={WIDTH}
-                    height={DEPTH}
-                    style={{
-                        stroke: element.selected ? "#0096fd" : "#000",
-                        strokeWidth: "2px",
-                        fill: "#84e1ce",
-                    }}
-                />
-                <text
-                    key="2"
-                    x="0"
-                    y="0"
-                    transform={`translate(${WIDTH / 2}, ${
-                        DEPTH / 2
-                    }) scale(1,-1) rotate(${textRotation})`}
-                    style={{ textAnchor: "middle", fontSize: "11px" }}
-                >
-                    {element.type}
-                </text>
-            </g>
+        return render2D(
+            element,
+            this.properties.width.defaultValue.length,
+            this.properties.depth.defaultValue.length
         );
+        // let angle = element.rotation + 90;
+        // const width = this.properties.width.defaultValue.length;
+        // const depth = this.properties.depth.defaultValue.length;
+
+        // let textRotation = 0;
+        // if (Math.sin((angle * Math.PI) / 180) < 0) {
+        //     textRotation = 180;
+        // }
+
+        // return (
+        //     <g transform={`translate(${-width / 2},${-DEPTH / 2})`}>
+        //         <rect
+        //             key="1"
+        //             x="0"
+        //             y="0"
+        //             width={width}
+        //             height={DEPTH}
+        //             style={{
+        //                 stroke: element.selected ? "#0096fd" : "#000",
+        //                 strokeWidth: "2px",
+        //                 fill: "#84e1ce",
+        //             }}
+        //         />
+        //         <text
+        //             key="2"
+        //             x="0"
+        //             y="0"
+        //             transform={`translate(${width / 2}, ${
+        //                 DEPTH / 2
+        //             }) scale(1,-1) rotate(${textRotation})`}
+        //             style={{ textAnchor: "middle", fontSize: "11px" }}
+        //         >
+        //             {element.type}
+        //         </text>
+        //     </g>
+        // );
     },
 
     render3D: function (element, layer, scene) {
